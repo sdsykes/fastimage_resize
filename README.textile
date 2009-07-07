@@ -1,0 +1,3 @@
+h1. FastImageResize
+
+h4. FastImageResize is an extremely light solution for resizing images in ruby by using libgd
