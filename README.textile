@@ -6,7 +6,7 @@ FastImage Resize will resize gifs, jpegs, and png files.
 
 It uses resampling to get good looking results.
 
-And it doesn't rely on installing external libraries such as RMagick (which relies on ImageMagick or GraphicsMagick) or ImageScience (which relies on FreeImage).
+And it doesn't rely on installing external heavy libraries such as RMagick (which relies on ImageMagick or GraphicsMagick) or ImageScience (which relies on FreeImage).
 
 h2. Examples
 
