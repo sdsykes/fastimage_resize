@@ -2,6 +2,12 @@ h1. FastImage Resize
 
 h4. FastImage Resize is an extremely light solution for resizing images in ruby by using libgd
 
+FastImage Resize will resize gifs, jpegs, and png files.
+
+It uses resampling to get good looking results.
+
+And it doesn't rely on installing external libraries such as RMagick (which relies on ImageMagick or GraphicsMagick) or ImageScience (which relies on FreeImage).
+
 h2. Examples
 
 <pre>
@@ -12,6 +18,32 @@ h2. Examples
   => 1
 </pre>
 </code>
+
+The file my.gif is created locally, containing the resized image.
+
+h2. Installation
+
+First check the requirements section below.
+
+h4. Gem
+
+  sudo gem install sdsykes-fastimage_resize -s http://gems.github.com
+
+h4. Rails
+
+Install the gem as above, and configure it in your environment.rb file as below:
+<pre>
+<code>
+...
+Rails::Initializer.run do |config|
+  ...
+  config.gem "sdsykes-fastimage_resize", :lib=>"fastimage_resize"
+  ...
+end
+...
+</code>
+</pre>
+Then you're off - just use FastImage.resize() in your code as in the examples.
 
 h2. Requirements
 
@@ -36,6 +68,19 @@ h2. Requirements
 See "http://www.libgd.org/":http://www.libgd.org/
 
 Libgd is commonly available on most unix platforms, including OSX.
+
+h2. Documentation
+
+"http://rdoc.info/projects/sdsykes/fastimage_resize":http://rdoc.info/projects/sdsykes/fastimage_resize
+
+h2. Caveats
+
+Because of the way that libgd works, gif files that have transparency may not always come through with the transparency perfectly retained.
+
+
+h2. Tests
+
+You'll need to 'sudo gem install fakeweb' to be able to run the tests
 
 h2. References
 
