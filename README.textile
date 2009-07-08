@@ -47,6 +47,15 @@ end
 ...
 </code>
 </pre>
+
+You may also need this in your environment.rb so that the rails process puts the compiled C code in a place it can access:
+
+<pre>
+<code>
+ENV['INLINEDIR'] = RAILS_ROOT + "/tmp"  # for RubyInline
+</code>
+</pre>
+
 Then you're off - just use FastImage.resize() in your code as in the examples.
 
 h2. Requirements
