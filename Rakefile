@@ -3,11 +3,11 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
-    s.name = "fastimage"
-    s.summary = "FastImage - Image info fast"
+    s.name = "fastimage_resize"
+    s.summary = "FastImage Resize - Image resizing fast and simple"
     s.email = "sdsykes@gmail.com"
-    s.homepage = "http://github.com/sdsykes/fastimage"
-    s.description = "FastImage finds the size or type of an image given its uri by fetching as little as needed."
+    s.homepage = "http://github.com/sdsykes/fastimage_resize"
+    s.description = "FastImage Rssize is an extremely light solution for resizing images in ruby by using libgd."
     s.authors = ["Stephen Sykes"]
     s.files = FileList["[A-Z]*", "{lib,test}/**/*"]
   end
