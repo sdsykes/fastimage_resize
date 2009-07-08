@@ -1,3 +1,38 @@
-h1. FastImageResize
+h1. FastImage Resize
 
-h4. FastImageResize is an extremely light solution for resizing images in ruby by using libgd
+h4. FastImage Resize is an extremely light solution for resizing images in ruby by using libgd
+
+h2. Examples
+<pre>
+<code>
+  require 'fastimage_resize'
+
+  FastImage.resize("http://stephensykes.com/images/ss.com_x.gif", "my.gif", 100, 20)
+  => true
+</pre>
+</code>
+
+h2. Requirements
+
+* RubyInline
+<pre>
+<code>
+  sudo gem install RubyInline
+</pre>
+</code>
+
+* FastImage
+<pre>
+<code>
+  sudo gem install sdsykes-fastimage -s http://gems.github.com
+</pre>
+</code>
+
+* Libgd
+
+See http://www.libgd.org/
+Libgd is commonly available on most unix platforms, including OSX.
+
+h2. References
+
+* "http://blog.new-bamboo.co.uk/2007/12/3/super-f-simple-resizing":http://blog.new-bamboo.co.uk/2007/12/3/super-f-simple-resizing

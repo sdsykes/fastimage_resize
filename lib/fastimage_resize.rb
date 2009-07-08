@@ -1,31 +1,41 @@
-# FastImageResize is an extremely light solution for resizing images in ruby by using libgd
+# FastImage Resize is an extremely light solution for resizing images in ruby by using libgd
 #
 # === Examples
+#
 #   require 'fastimage_resize'
 #
-#   FastImageResize.resize("http://stephensykes.com/images/ss.com_x.gif", "my.gif", 100, 20)
+#   FastImage.resize("http://stephensykes.com/images/ss.com_x.gif", "my.gif", 100, 20)
 #   => true
 #
-# === References
-# * http://blog.new-bamboo.co.uk/2007/12/3/super-f-simple-resizing
+# === Requirements
 #
+# RubyInline
+#
+#   sudo gem install RubyInline
+#
+# FastImage
+#
+#   sudo gem install sdsykes-fastimage -s http://gems.github.com
+#
+# Libgd
+#
+# See http://www.libgd.org/
+# Libgd is commonly available on most unix platforms, including OSX. 
+#
+# === References
+#
+# * http://blog.new-bamboo.co.uk/2007/12/3/super-f-simple-resizing
 
 require 'inline'
 require 'open-uri'
 require 'tempfile'
 require 'fastimage'
 
-class FastImageResize
+class FastImage
   SUPPORTED_FORMATS = [:jpg, :png, :gif]
 
-  class FastImageResizeException < StandardError # :nodoc:
+  class FormatNotSupported < FastImageException # :nodoc:
   end
-  class NotSupported < FastImageResizeException # :nodoc:
-  end
-  class FetchError < FastImageResizeException # :nodoc:
-  end
-  
-  def resize_image(filename_in, filename_out, w, h, image_type, jpeg_quality); end
   
   def self.resize(uri_in, file_out, w, h, options={})
     jpeg_quality = options[:jpeg_quality] || -1
@@ -40,16 +50,18 @@ class FastImageResize
     else
       resize_local(uri_in, file_out, w, h, jpeg_quality)
     end
-  rescue OpenURI::HTTPError, SocketError, FastImage::ImageFetchFailure
-    raise FetchError
+  rescue OpenURI::HTTPError, SocketError
+    raise ImageFetchFailure
   end
 
   def self.resize_local(file_in, file_out, w, h, jpeg_quality)
     type_index = SUPPORTED_FORMATS.index(FastImage.type(file_in, :raise_on_failure=>true))
-    raise NotSupported unless type_index
+    raise FormatNotSupported unless type_index
     new.resize_image(file_in, file_out, w, h, type_index, jpeg_quality)
   end
 
+  def resize_image(filename_in, filename_out, w, h, image_type, jpeg_quality); end
+  
   inline do |builder|
     builder.include '"gd.h"'
     builder.add_link_flags "-lgd"
