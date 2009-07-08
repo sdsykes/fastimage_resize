@@ -5,7 +5,7 @@ FastImage Resize is an extremely light solution for resizing images in ruby by u
   require 'fastimage_resize'
 
   FastImage.resize("http://stephensykes.com/images/ss.com_x.gif", "my.gif", 100, 20)
-  => true
+  => 1
 
 === Requirements
 

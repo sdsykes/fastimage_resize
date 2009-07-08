@@ -5,7 +5,7 @@
 #   require 'fastimage_resize'
 #
 #   FastImage.resize("http://stephensykes.com/images/ss.com_x.gif", "my.gif", 100, 20)
-#   => true
+#   => 1
 #
 # === Requirements
 #
@@ -41,7 +41,7 @@ class FastImage
     jpeg_quality = options[:jpeg_quality] || -1
     
     u = URI.parse(uri_in)
-    if u.scheme == "http" || u.scheme == "ftp" || u.scheme == "https"
+    if u.scheme == "http" || u.scheme == "https" || u.scheme == "ftp"
       f = Tempfile.new(name)
       f.write(open(u).read)
       f.close
@@ -55,9 +55,10 @@ class FastImage
   end
 
   def self.resize_local(file_in, file_out, w, h, jpeg_quality)
-    type_index = SUPPORTED_FORMATS.index(FastImage.type(file_in, :raise_on_failure=>true))
+    fi = new(file_in, :raise_on_failure=>true, :type_only=>true)
+    type_index = SUPPORTED_FORMATS.index(fi.type)
     raise FormatNotSupported unless type_index
-    new.resize_image(file_in, file_out, w, h, type_index, jpeg_quality)
+    fi.resize_image(file_in, file_out, w, h, type_index, jpeg_quality)
   end
 
   def resize_image(filename_in, filename_out, w, h, image_type, jpeg_quality); end

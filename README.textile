@@ -9,7 +9,7 @@ h2. Examples
   require 'fastimage_resize'
 
   FastImage.resize("http://stephensykes.com/images/ss.com_x.gif", "my.gif", 100, 20)
-  => true
+  => 1
 </pre>
 </code>
 
