@@ -27,7 +27,11 @@ First check the requirements section below.
 
 h4. Gem
 
+<pre>
+<code>
   sudo gem install sdsykes-fastimage_resize -s http://gems.github.com
+</pre>
+</code>
 
 h4. Rails
 
