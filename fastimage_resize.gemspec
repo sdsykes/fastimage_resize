@@ -16,6 +16,9 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.1}
+  s.requirements << 'libgd, see www.libgd.org'
+  s.add_dependency('RubyInline', '>= 3.8.2')
+  s.add_dependency('sdsykes-fastimage', '>= 1.1.2')
   s.summary = %q{FastImage Resize - Image resizing fast and simple}
 
   if s.respond_to? :specification_version then
