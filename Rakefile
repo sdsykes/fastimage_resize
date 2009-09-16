@@ -7,7 +7,7 @@ begin
     s.summary = "FastImage Resize - Image resizing fast and simple"
     s.email = "sdsykes@gmail.com"
     s.homepage = "http://github.com/sdsykes/fastimage_resize"
-    s.description = "FastImage Rssize is an extremely light solution for resizing images in ruby by using libgd."
+    s.description = "FastImage Resize is an extremely light solution for resizing images in ruby by using libgd."
     s.authors = ["Stephen Sykes"]
     s.files = FileList["[A-Z]*", "{lib,test}/**/*"]
     s.requirements << 'libgd, see www.libgd.org'
