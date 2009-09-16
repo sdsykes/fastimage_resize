@@ -32,7 +32,7 @@ require 'tempfile'
 require 'fastimage'
 
 class FastImage
-  SUPPORTED_FORMATS = [:jpg, :png, :gif]
+  SUPPORTED_FORMATS = [:jpeg, :png, :gif]
 
   class FormatNotSupported < FastImageException # :nodoc:
   end
