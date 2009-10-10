@@ -14,6 +14,7 @@ begin
     s.add_dependency('RubyInline', '>= 3.8.2')
     s.add_dependency('sdsykes-fastimage', '>= 1.2.0')
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://
 gems.github.com"
