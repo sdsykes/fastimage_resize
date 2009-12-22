@@ -29,7 +29,7 @@ h4. Gem
 
 <pre>
 <code>
-  sudo gem install sdsykes-fastimage_resize -s http://gems.github.com
+  sudo gem install fastimage_resize
 </pre>
 </code>
 
@@ -41,7 +41,7 @@ Install the gem as above, and configure it in your environment.rb file as below:
 ...
 Rails::Initializer.run do |config|
   ...
-  config.gem "sdsykes-fastimage_resize", :lib=>"fastimage_resize"
+  config.gem "fastimage_resize", :lib=>"fastimage_resize"
   ...
 end
 ...
@@ -72,7 +72,7 @@ h2. Requirements
 
 <pre>
 <code>
-  sudo gem install sdsykes-fastimage -s http://gems.github.com
+  sudo gem install fastimage
 </pre>
 </code>
 
