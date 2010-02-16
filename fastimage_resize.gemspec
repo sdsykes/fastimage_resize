@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{fastimage_resize}
-  s.version = "1.2.0"
+  s.version = "1.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stephen Sykes"]
-  s.date = %q{2009-12-22}
+  s.date = %q{2010-02-16}
   s.description = %q{FastImage Resize is an extremely light solution for resizing images in ruby by using libgd.}
   s.email = %q{sdsykes@gmail.com}
   s.extra_rdoc_files = [
