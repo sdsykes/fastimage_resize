@@ -22,6 +22,12 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION.yml",
      "lib/fastimage_resize.rb",
+     "test/fixtures/faulty.jpg",
+     "test/fixtures/test.bmp",
+     "test/fixtures/test.gif",
+     "test/fixtures/test.ico",
+     "test/fixtures/test.jpg",
+     "test/fixtures/test.png",
      "test/test.rb"
   ]
   s.homepage = %q{http://github.com/sdsykes/fastimage_resize}
