@@ -58,7 +58,7 @@ class FastImage
     fi = new(file_in, :raise_on_failure=>true)
     type_index = SUPPORTED_FORMATS.index(fi.type)
     raise FormatNotSupported unless type_index
-    fi.resize_image(file_in, file_out, w, h, type_index, jpeg_quality)
+    fi.resize_image(file_in, file_out, w.to_i, h.to_i, type_index, jpeg_quality)
   end
 
   def resize_image(filename_in, filename_out, w, h, image_type, jpeg_quality); end
