@@ -8,6 +8,8 @@ It uses resampling to get good looking results.
 
 And it doesn't rely on installing external heavy libraries such as RMagick (which relies on ImageMagick or GraphicsMagick) or ImageScience (which relies on FreeImage).
 
+FastImage Resize uses *Libgd*, which is commonly available on most unix platforms, including OSX.  It is very likely that you already have this software installed on your server.
+
 h2. Examples
 
 <pre>
@@ -35,20 +37,28 @@ h4. Gem
 
 h4. Rails
 
-Install the gem as above, and configure it in your environment.rb file as below:
+Install the gem as above, and for Rails 2 configure it in your environment.rb file as below:
 <pre>
 <code>
 ...
 Rails::Initializer.run do |config|
   ...
-  config.gem "fastimage_resize", :lib=>"fastimage_resize"
+  config.gem "fastimage_resize"
   ...
 end
 ...
 </code>
 </pre>
 
-You may also need this in your environment.rb so that the rails process puts the compiled C code in a place it can access:
+For Rails 3, add this to your Gemfile:
+
+<pre>
+<code>
+gem 'fastimage_resize'
+</code>
+</pre>
+
+For any Rails version, you may also need this in your environment.rb so that the rails process puts the compiled C code in a place it can access:
 
 <pre>
 <code>
@@ -81,6 +91,16 @@ h2. Requirements
 See "http://www.libgd.org/":http://www.libgd.org/
 
 Libgd is commonly available on most unix platforms, including OSX.
+
+On OSX, if you have "macports":http://www.macports.org/ you can use.
+
+<pre>
+<code>
+  sudo port install gd2
+</code>
+</pre>
+
+It is also available in "homebrew":http://github.com/mxcl/homebrew (search for gd), and "fink":http://www.finkproject.org/ (try fink install gd2 gd2-bin).
 
 h2. Documentation
 
