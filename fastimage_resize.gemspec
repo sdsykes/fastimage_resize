@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{fastimage_resize}
-  s.version = "1.2.2"
+  s.version = "1.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stephen Sykes"]
-  s.date = %q{2010-02-16}
+  s.date = %q{2010-05-25}
   s.description = %q{FastImage Resize is an extremely light solution for resizing images in ruby by using libgd.}
   s.email = %q{sdsykes@gmail.com}
   s.extra_rdoc_files = [
@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.requirements = ["libgd, see www.libgd.org"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{FastImage Resize - Image resizing fast and simple}
   s.test_files = [
     "test/test.rb"
