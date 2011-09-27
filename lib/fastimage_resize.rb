@@ -50,8 +50,8 @@ class FastImage
     else
       resize_local(uri_in, file_out, w, h, jpeg_quality)
     end
-  rescue OpenURI::HTTPError, SocketError
-    raise ImageFetchFailure
+  rescue OpenURI::HTTPError, SocketError, URI::InvalidURIError, RuntimeError => e
+    raise ImageFetchFailure, e.class
   end
 
   def self.resize_local(file_in, file_out, w, h, jpeg_quality)

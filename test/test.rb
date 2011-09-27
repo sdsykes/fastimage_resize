@@ -4,7 +4,7 @@ require 'test/unit'
 
 PathHere = File.dirname(__FILE__)
 
-require File.join(PathHere, "..", "lib", 'fastimage_resize')
+require File.join(".", PathHere, "..", "lib", 'fastimage_resize')
 
 require 'fakeweb'
 
@@ -22,7 +22,7 @@ BadFixtures = [
   "test.ico"
 ]
 
-TestUrl = "http://example.nowhere/"
+TestUrl = "http://www.example.nowhere/"
 
 GoodFixtures.each do |fn, info|
   FakeWeb.register_uri(:get, "#{TestUrl}#{fn}", :body => File.join(FixturePath, fn))
@@ -30,6 +30,15 @@ end
 BadFixtures.each do |fn|
   FakeWeb.register_uri(:get, "#{TestUrl}#{fn}", :body => File.join(FixturePath, fn))
 end
+
+redirect_response = <<END
+HTTP/1.1 302 Found
+Date: Tue, 27 Sep 2011 09:47:50 GMT
+Server: Apache/2.2.11
+Location: https://somwehere.example.com/a.gif
+Status: 302
+END
+FakeWeb.register_uri(:get, "#{TestUrl}/redirect", :response=>redirect_response)
 
 class FastImageResizeTest < Test::Unit::TestCase
   def test_resize_image_types
@@ -65,4 +74,15 @@ class FastImageResizeTest < Test::Unit::TestCase
     end
   end
   
+  def test_should_raise_for_invalid_uri
+    assert_raises(FastImage::ImageFetchFailure) do
+      FastImage.resize("#{TestUrl}////%&redirect", "foo", 20, 20)
+    end
+  end
+  
+  def test_should_raise_for_redirect
+    assert_raises(FastImage::ImageFetchFailure) do
+      FastImage.resize("#{TestUrl}/redirect", "foo", 20, 20)
+    end
+  end
 end
