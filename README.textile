@@ -115,7 +115,7 @@ Because of the way that libgd works, gif files that have transparency may not al
 
 h2. Tests
 
-You'll need to 'sudo gem install fakeweb' to be able to run the tests
+You'll need to 'gem install fakeweb' to be able to run the tests
 
 h2. References
 
