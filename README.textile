@@ -10,6 +10,8 @@ And it doesn't rely on installing external heavy libraries such as RMagick (whic
 
 FastImage Resize uses *Libgd*, which is commonly available on most unix platforms, including OSX.  It is very likely that you already have this software installed on your server.
 
+FastImage Resize relies on "RubyInline":https://github.com/seattlerb/rubyinline for compiling and managing the C extension code.
+
 h2. Examples
 
 <pre>
@@ -74,7 +76,7 @@ h2. Requirements
 
 <pre>
 <code>
-  sudo gem install RubyInline
+  gem install RubyInline
 </pre>
 </code>
 
@@ -82,7 +84,7 @@ h2. Requirements
 
 <pre>
 <code>
-  sudo gem install fastimage
+  gem install fastimage
 </pre>
 </code>
 
@@ -118,3 +120,7 @@ You'll need to 'sudo gem install fakeweb' to be able to run the tests
 h2. References
 
 * "http://blog.new-bamboo.co.uk/2007/12/3/super-f-simple-resizing":http://blog.new-bamboo.co.uk/2007/12/3/super-f-simple-resizing
+
+h2. Licence
+
+MIT, see file MIT_LICENCE

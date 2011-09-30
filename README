@@ -11,11 +11,11 @@ FastImage Resize is an extremely light solution for resizing images in ruby by u
 
 RubyInline
 
-  sudo gem install RubyInline
+  gem install RubyInline
 
 FastImage
 
-  sudo gem install sdsykes-fastimage -s http://gems.github.com
+  gem install fastimage
 
 Libgd
 
