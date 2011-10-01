@@ -41,13 +41,33 @@ END
 FakeWeb.register_uri(:get, "#{TestUrl}/redirect", :response=>redirect_response)
 
 class FastImageResizeTest < Test::Unit::TestCase
-  def test_resize_image_types
+  def test_resize_image_types_from_http
     GoodFixtures.each do |fn, info|
       outfile = File.join(PathHere, "fixtures", "resized_" + fn)
       FastImage.resize(TestUrl + fn, outfile, info[1][0] / 3, info[1][1] / 2)
       assert_equal [info[1][0] / 3, info[1][1] / 2], FastImage.size(outfile)
       File.unlink outfile
     end
+  end
+
+  def test_resize_image_types_from_files
+    GoodFixtures.each do |fn, info|
+      outfile = File.join(PathHere, "fixtures", "resized_" + fn)
+      FastImage.resize(File.join(FixturePath, fn), outfile, info[1][0] / 3, info[1][1] / 2)
+      assert_equal [info[1][0] / 3, info[1][1] / 2], FastImage.size(outfile)
+      File.unlink outfile
+    end
+  end
+
+  def test_resize_image_types_from_io_objects
+    GoodFixtures.each do |fn, info|
+      outfile = File.join(PathHere, "fixtures", "resized_" + fn)
+      File.open(File.join(FixturePath, fn)) do |io|
+        FastImage.resize(io, outfile, info[1][0] / 3, info[1][1] / 2)
+        assert_equal [info[1][0] / 3, info[1][1] / 2], FastImage.size(outfile)
+        File.unlink outfile
+      end
+    end    
   end
 
   def test_should_raise_for_bmp_files

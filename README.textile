@@ -124,3 +124,7 @@ h2. References
 h2. Licence
 
 MIT, see file MIT_LICENCE
+
+h2. Author
+
+Stephen Sykes, @sdsykes

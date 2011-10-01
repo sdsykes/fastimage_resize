@@ -11,11 +11,11 @@
 #
 # RubyInline
 #
-#   sudo gem install RubyInline
+#   gem install RubyInline
 #
 # FastImage
 #
-#   sudo gem install sdsykes-fastimage -s http://gems.github.com
+#   gem install fastimage
 #
 # Libgd
 #
@@ -37,28 +37,54 @@ class FastImage
   class FormatNotSupported < FastImageException # :nodoc:
   end
   
-  def self.resize(uri_in, file_out, w, h, options={})
+  # Resizes an image, storing the result in a file given in file_out
+  #
+  # Input can be a filename, a uri, or an IO object.
+  #
+  # FastImage Resize can resize GIF, JPEG and PNG files.
+  #
+  # === Example
+  #
+  #   require 'fastimage_resize'
+  #
+  #   FastImage.resize("http://stephensykes.com/images/ss.com_x.gif", "my.gif", 100, 20)
+  #
+  # === Supported options
+  # [:jpeg_quality]
+  #   A figure passed to libgd to determine quality of output jpeg (only useful if input is jpeg)
+  #
+  def self.resize(input, file_out, w, h, options={})
     jpeg_quality = options[:jpeg_quality] || -1
     
-    u = URI.parse(uri_in)
-    if u.scheme == "http" || u.scheme == "https" || u.scheme == "ftp"
-      f = Tempfile.new(name)
-      f.write(open(u).read)
-      f.close
-      resize_local(f.path, file_out, w, h, jpeg_quality)
-      File.unlink(f.path)
+    if input.respond_to?(:read)
+      read_and_resize(input, file_out, w, h, jpeg_quality)
     else
-      resize_local(uri_in, file_out, w, h, jpeg_quality)
+      u = URI.parse(input)
+      if u.scheme == "http" || u.scheme == "https" || u.scheme == "ftp"
+        read_and_resize(open(u), file_out, w, h, jpeg_quality)
+      else
+        resize_local(input, file_out, w, h, jpeg_quality)
+      end
     end
   rescue OpenURI::HTTPError, SocketError, URI::InvalidURIError, RuntimeError => e
     raise ImageFetchFailure, e.class
   end
 
+  private
+
+  def self.read_and_resize(readable, file_out, w, h, jpeg_quality)
+    f = Tempfile.new(name)
+    f.write(readable.read)
+    f.close
+    resize_local(f.path, file_out, w, h, jpeg_quality)
+    File.unlink(f.path)    
+  end
+
   def self.resize_local(file_in, file_out, w, h, jpeg_quality)
-    fi = new(file_in, :raise_on_failure=>true)
-    type_index = SUPPORTED_FORMATS.index(fi.type)
+    fast_image = new(file_in, :raise_on_failure=>true)
+    type_index = SUPPORTED_FORMATS.index(fast_image.type)
     raise FormatNotSupported unless type_index
-    fi.resize_image(file_in, file_out, w.to_i, h.to_i, type_index, jpeg_quality)
+    fast_image.resize_image(file_in, file_out, w.to_i, h.to_i, type_index, jpeg_quality.to_i)
   end
 
   def resize_image(filename_in, filename_out, w, h, image_type, jpeg_quality); end
