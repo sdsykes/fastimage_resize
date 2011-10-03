@@ -44,7 +44,7 @@ class FastImageResizeTest < Test::Unit::TestCase
   def test_resize_image_types_from_http
     GoodFixtures.each do |fn, info|
       outfile = File.join(PathHere, "fixtures", "resized_" + fn)
-      FastImage.resize(TestUrl + fn, outfile, info[1][0] / 3, info[1][1] / 2)
+      FastImage.resize(TestUrl + fn, info[1][0] / 3, info[1][1] / 2, :outfile=>outfile)
       assert_equal [info[1][0] / 3, info[1][1] / 2], FastImage.size(outfile)
       File.unlink outfile
     end
@@ -53,7 +53,7 @@ class FastImageResizeTest < Test::Unit::TestCase
   def test_resize_image_types_from_files
     GoodFixtures.each do |fn, info|
       outfile = File.join(PathHere, "fixtures", "resized_" + fn)
-      FastImage.resize(File.join(FixturePath, fn), outfile, info[1][0] / 3, info[1][1] / 2)
+      FastImage.resize(File.join(FixturePath, fn), info[1][0] / 3, info[1][1] / 2, :outfile=>outfile)
       assert_equal [info[1][0] / 3, info[1][1] / 2], FastImage.size(outfile)
       File.unlink outfile
     end
@@ -63,18 +63,27 @@ class FastImageResizeTest < Test::Unit::TestCase
     GoodFixtures.each do |fn, info|
       outfile = File.join(PathHere, "fixtures", "resized_" + fn)
       File.open(File.join(FixturePath, fn)) do |io|
-        FastImage.resize(io, outfile, info[1][0] / 3, info[1][1] / 2)
+        FastImage.resize(io, info[1][0] / 3, info[1][1] / 2, :outfile=>outfile)
         assert_equal [info[1][0] / 3, info[1][1] / 2], FastImage.size(outfile)
         File.unlink outfile
       end
-    end    
+    end
+  end
+
+  def test_resize_to_temp_file
+    GoodFixtures.each do |fn, info|
+      File.open(File.join(FixturePath, fn)) do |io|
+        outfile = FastImage.resize(io, info[1][0] / 3, info[1][1] / 2)
+        assert_equal [info[1][0] / 3, info[1][1] / 2], FastImage.size(outfile)
+      end
+    end
   end
 
   def test_should_raise_for_bmp_files
     fn = BadFixtures[0]
     outfile = File.join(PathHere, "fixtures", "resized_" + fn)
     assert_raises(FastImage::FormatNotSupported) do
-      FastImage.resize(TestUrl + fn, outfile, 20, 20)
+      FastImage.resize(TestUrl + fn, 20, 20, :outfile=>outfile)
     end
   end
   
@@ -82,7 +91,7 @@ class FastImageResizeTest < Test::Unit::TestCase
     fn = BadFixtures[1]
     outfile = File.join(PathHere, "fixtures", "resized_" + fn)
     assert_raises(FastImage::SizeNotFound) do
-      FastImage.resize(TestUrl + fn, outfile, 20, 20)
+      FastImage.resize(TestUrl + fn, 20, 20, :outfile=>outfile)
     end
   end
   
@@ -90,19 +99,19 @@ class FastImageResizeTest < Test::Unit::TestCase
     fn = BadFixtures[2]
     outfile = File.join(PathHere, "fixtures", "resized_" + fn)
     assert_raises(FastImage::UnknownImageType) do
-      FastImage.resize(TestUrl + fn, outfile, 20, 20)
+      FastImage.resize(TestUrl + fn, 20, 20, :outfile=>outfile)
     end
   end
   
   def test_should_raise_for_invalid_uri
     assert_raises(FastImage::ImageFetchFailure) do
-      FastImage.resize("#{TestUrl}////%&redirect", "foo", 20, 20)
+      FastImage.resize("#{TestUrl}////%&redirect", 20, 20)
     end
   end
   
   def test_should_raise_for_redirect
     assert_raises(FastImage::ImageFetchFailure) do
-      FastImage.resize("#{TestUrl}/redirect", "foo", 20, 20)
+      FastImage.resize("#{TestUrl}/redirect", 20, 20)
     end
   end
 end

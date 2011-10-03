@@ -4,7 +4,7 @@
 #
 #   require 'fastimage_resize'
 #
-#   FastImage.resize("http://stephensykes.com/images/ss.com_x.gif", "my.gif", 100, 20)
+#   FastImage.resize("http://stephensykes.com/images/ss.com_x.gif", 100, 20, :outfile=>"my.gif")
 #   => 1
 #
 # === Requirements
@@ -47,44 +47,63 @@ class FastImage
   #
   #   require 'fastimage_resize'
   #
-  #   FastImage.resize("http://stephensykes.com/images/ss.com_x.gif", "my.gif", 100, 20)
+  #   FastImage.resize("http://stephensykes.com/images/ss.com_x.gif", 100, 20, :outfile=>"my.gif")
   #
   # === Supported options
   # [:jpeg_quality]
   #   A figure passed to libgd to determine quality of output jpeg (only useful if input is jpeg)
+  # [:outfile]
+  #   Name of a file to store the output in, in this case a temp file is not used
   #
-  def self.resize(input, file_out, w, h, options={})
-    jpeg_quality = options[:jpeg_quality] || -1
+  def self.resize(input, w, h, options={})
+    jpeg_quality = options[:jpeg_quality].to_i || -1
+    file_out = options[:outfile]
     
     if input.respond_to?(:read)
-      read_and_resize(input, file_out, w, h, jpeg_quality)
+      file_in = read_to_local(input)
     else
       u = URI.parse(input)
       if u.scheme == "http" || u.scheme == "https" || u.scheme == "ftp"
-        read_and_resize(open(u), file_out, w, h, jpeg_quality)
+        file_in = read_to_local(open(u))
       else
-        resize_local(input, file_out, w, h, jpeg_quality)
+        file_in = input.to_s
       end
     end
+
+    if !file_out
+      temp_file = Tempfile.new(name)
+      file_out = temp_file.path
+    else
+      temp_file = nil
+    end
+
+    fast_image = new(file_in, :raise_on_failure=>true)
+    type_index = SUPPORTED_FORMATS.index(fast_image.type)
+    raise FormatNotSupported unless type_index
+
+    in_path = file_in.respond_to?(:path) ? file_in.path : file_in
+    
+    fast_image.resize_image(in_path, file_out.to_s, w.to_i, h.to_i, type_index, jpeg_quality)
+
+    if file_in.respond_to?(:close)
+      file_in.close
+      file_in.unlink
+    end
+
+    temp_file
   rescue OpenURI::HTTPError, SocketError, URI::InvalidURIError, RuntimeError => e
     raise ImageFetchFailure, e.class
   end
 
   private
 
-  def self.read_and_resize(readable, file_out, w, h, jpeg_quality)
-    f = Tempfile.new(name)
-    f.write(readable.read)
-    f.close
-    resize_local(f.path, file_out, w, h, jpeg_quality)
-    File.unlink(f.path)    
-  end
-
-  def self.resize_local(file_in, file_out, w, h, jpeg_quality)
-    fast_image = new(file_in, :raise_on_failure=>true)
-    type_index = SUPPORTED_FORMATS.index(fast_image.type)
-    raise FormatNotSupported unless type_index
-    fast_image.resize_image(file_in, file_out, w.to_i, h.to_i, type_index, jpeg_quality.to_i)
+  # returns readable tempfile
+  def self.read_to_local(readable)
+    temp = Tempfile.new(name)
+    temp.write(readable.read)
+    temp.close
+    temp.open
+    temp
   end
 
   def resize_image(filename_in, filename_out, w, h, image_type, jpeg_quality); end
