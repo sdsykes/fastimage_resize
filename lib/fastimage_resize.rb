@@ -56,7 +56,7 @@ class FastImage
   #   Name of a file to store the output in, in this case a temp file is not used
   #
   def self.resize(input, w, h, options={})
-    jpeg_quality = options[:jpeg_quality].to_i || -1
+    jpeg_quality = options[:jpeg_quality] || -1
     file_out = options[:outfile]
     
     if input.respond_to?(:read)
@@ -83,7 +83,7 @@ class FastImage
 
     in_path = file_in.respond_to?(:path) ? file_in.path : file_in
     
-    fast_image.resize_image(in_path, file_out.to_s, w.to_i, h.to_i, type_index, jpeg_quality)
+    fast_image.resize_image(in_path, file_out.to_s, w.to_i, h.to_i, type_index, jpeg_quality.to_i)
 
     if file_in.respond_to?(:close)
       file_in.close
