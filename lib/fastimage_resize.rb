@@ -33,6 +33,7 @@ require 'fastimage'
 
 class FastImage
   SUPPORTED_FORMATS = [:jpeg, :png, :gif]
+  FILE_EXTENSIONS = [:jpg, :png, :gif]  # prefer jpg to jpeg as an extension
 
   class FormatNotSupported < FastImageException # :nodoc:
   end
@@ -70,16 +71,16 @@ class FastImage
       end
     end
 
+    fast_image = new(file_in, :raise_on_failure=>true)
+    type_index = SUPPORTED_FORMATS.index(fast_image.type)
+    raise FormatNotSupported unless type_index
+
     if !file_out
-      temp_file = Tempfile.new(name)
+      temp_file = Tempfile.new([name, ".#{FILE_EXTENSIONS[type_index]}"])
       file_out = temp_file.path
     else
       temp_file = nil
     end
-
-    fast_image = new(file_in, :raise_on_failure=>true)
-    type_index = SUPPORTED_FORMATS.index(fast_image.type)
-    raise FormatNotSupported unless type_index
 
     in_path = file_in.respond_to?(:path) ? file_in.path : file_in
     

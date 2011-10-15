@@ -127,4 +127,13 @@ class FastImageResizeTest < Test::Unit::TestCase
     assert size > 1500
     File.unlink outfile
   end
+  
+  def test_output_tempfile_has_right_extension
+    outfile = FastImage.resize(File.join(FixturePath, "test.jpg"), 200, 200)
+    assert outfile.path =~ /\.jpg$/
+    outfile = FastImage.resize(File.join(FixturePath, "test.gif"), 200, 200)
+    assert outfile.path =~ /\.gif$/
+    outfile = FastImage.resize(File.join(FixturePath, "test.png"), 200, 200)
+    assert outfile.path =~ /\.png$/
+  end
 end
