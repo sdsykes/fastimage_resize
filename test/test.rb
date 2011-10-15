@@ -114,4 +114,17 @@ class FastImageResizeTest < Test::Unit::TestCase
       FastImage.resize("#{TestUrl}/redirect", 20, 20)
     end
   end
+  
+  def test_resized_jpg_is_reasonable_size_for_quality
+    outfile = File.join(PathHere, "fixtures", "resized_test.jpg")
+    FastImage.resize(File.join(FixturePath, "test.jpg"), 200, 200, :outfile=>outfile)
+    size = File.size(outfile)
+    assert size < 30000
+    assert size > 10000
+    FastImage.resize(File.join(FixturePath, "test.jpg"), 200, 200, :outfile=>outfile, :jpeg_quality=>5)
+    size = File.size(outfile)
+    assert size < 3500
+    assert size > 1500
+    File.unlink outfile
+  end
 end
