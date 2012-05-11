@@ -136,4 +136,26 @@ class FastImageResizeTest < Test::Unit::TestCase
     outfile = FastImage.resize(File.join(FixturePath, "test.png"), 200, 200)
     assert outfile.path =~ /\.png$/
   end
+
+  def test_zero_width_scales_proportionately
+    GoodFixtures.each do |fn, info|
+      File.open(File.join(FixturePath, fn)) do |io|
+        halfHeight = (info[1][1] / 2).round
+        outfile = FastImage.resize(io, 0, halfHeight)
+        newWidth = (halfHeight * info[1][0] / info[1][1]).round
+        assert_equal [newWidth, halfHeight], FastImage.size(outfile)
+      end
+    end
+  end
+
+  def test_zero_height_scales_proportionately
+    GoodFixtures.each do |fn, info|
+      File.open(File.join(FixturePath, fn)) do |io|
+        halfWidth =  (info[1][0] / 2).round
+        outfile = FastImage.resize(io, halfWidth, 0)
+        newHeight = (halfWidth * info[1][1] / info[1][0]).round
+        assert_equal [halfWidth, newHeight], FastImage.size(outfile)
+      end
+    end
+  end
 end

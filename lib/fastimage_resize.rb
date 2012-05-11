@@ -44,6 +44,8 @@ class FastImage
   #
   # FastImage Resize can resize GIF, JPEG and PNG files.
   #
+  # Giving a zero value for width or height causes the image to scale proportionately.
+  #
   # === Example
   #
   #   require 'fastimage_resize'
@@ -83,7 +85,7 @@ class FastImage
     end
 
     in_path = file_in.respond_to?(:path) ? file_in.path : file_in
-    
+
     fast_image.resize_image(in_path, file_out.to_s, w.to_i, h.to_i, type_index, jpeg_quality.to_i)
 
     if file_in.respond_to?(:close)
@@ -122,13 +124,10 @@ class FastImage
         in = fopen(filename_in, "rb");
         if (!in) return Qnil;
 
-        im_out = gdImageCreateTrueColor(w, h);  /* must be truecolor */
         switch(image_type) {
           case 0: im_in = gdImageCreateFromJpeg(in);
                   break;
           case 1: im_in = gdImageCreateFromPng(in);
-                  gdImageAlphaBlending(im_out, 0);  /* handle transparency correctly */
-                  gdImageSaveAlpha(im_out, 1);
                   break;
           case 2: im_in = gdImageCreateFromGif(in);
                   trans = gdImageGetTransparent(im_in);
@@ -149,6 +148,23 @@ class FastImage
                   }
                   break;
           default: return Qnil;
+        }
+
+        if (w == 0 || h == 0) {
+          int originalWidth  = gdImageSX(im_in);
+          int originalHeight = gdImageSY(im_in);
+          if (w == 0) {
+            w = (int)(h * originalWidth / originalHeight);
+          } else {
+            h = (int)(w * originalHeight / originalWidth);
+          }
+        }
+
+        im_out = gdImageCreateTrueColor(w, h);  /* must be truecolor */
+
+        if (image_type == 1) {
+          gdImageAlphaBlending(im_out, 0);  /* handle transparency correctly */
+          gdImageSaveAlpha(im_out, 1);
         }
         
         fclose(in);
