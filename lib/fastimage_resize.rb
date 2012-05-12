@@ -77,6 +77,7 @@ class FastImage
 
     if !file_out
       temp_file = Tempfile.new([name, ".#{FILE_EXTENSIONS[type_index]}"])
+      temp_file.binmode
       file_out = temp_file.path
     else
       temp_file = nil
@@ -101,6 +102,7 @@ class FastImage
   # returns readable tempfile
   def self.read_to_local(readable)
     temp = Tempfile.new(name)
+    temp.binmode
     temp.write(readable.read)
     temp.close
     temp.open
