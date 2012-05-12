@@ -39,6 +39,8 @@ h2. Examples
 </code>
 </pre>
 
+Giving a zero value for width or height causes the image to scale proportionately.
+
 h2. Installation
 
 First check the requirements section below.
