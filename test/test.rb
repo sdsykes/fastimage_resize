@@ -98,7 +98,7 @@ class FastImageResizeTest < Test::Unit::TestCase
   def test_should_raise_for_ico_files
     fn = BadFixtures[2]
     outfile = File.join(PathHere, "fixtures", "resized_" + fn)
-    assert_raises(FastImage::UnknownImageType) do
+    assert_raises(FastImage::FormatNotSupported) do
       FastImage.resize(TestUrl + fn, 20, 20, :outfile=>outfile)
     end
   end
