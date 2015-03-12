@@ -115,6 +115,13 @@ class FastImageResizeTest < Test::Unit::TestCase
     end
   end
   
+  def test_should_resize_names_with_spaces
+    outfile = File.join(PathHere, "fixtures", "resized_test with space.jpg")
+    FastImage.resize(File.join(FixturePath, "test with space.jpg"), 10, 10, :outfile=>outfile)
+    assert File.exists?(outfile)
+    File.unlink outfile
+  end
+
   def test_resized_jpg_is_reasonable_size_for_quality
     outfile = File.join(PathHere, "fixtures", "resized_test.jpg")
     FastImage.resize(File.join(FixturePath, "test.jpg"), 200, 200, :outfile=>outfile)
