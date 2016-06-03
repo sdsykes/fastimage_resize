@@ -12,7 +12,7 @@ begin
     s.files = FileList["[A-Z]*", "{lib,test}/**/*"]
     s.requirements << 'libgd, see www.libgd.org'
     s.add_dependency('RubyInline', '>= 3.8.2')
-    s.add_dependency('fastimage', '>= 1.2.0')
+    s.add_dependency('fastimage', '>= 1.2.9')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
