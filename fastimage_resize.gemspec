@@ -3,6 +3,7 @@
 # Instead, edit Jeweler::Tasks in Rakefile, and run 'rake gemspec'
 # -*- encoding: utf-8 -*-
 # stub: fastimage_resize 2.0.3 ruby lib
+# stub: ext/fastimage_native_resize/extconf.rb
 
 Gem::Specification.new do |s|
   s.name = "fastimage_resize"
@@ -14,6 +15,7 @@ Gem::Specification.new do |s|
   s.date = "2016-06-03"
   s.description = "FastImage Resize is an extremely light solution for resizing images in ruby by using libgd."
   s.email = "sdsykes@gmail.com"
+  s.extensions = ["ext/fastimage_native_resize/extconf.rb"]
   s.extra_rdoc_files = [
     "README",
     "README.textile"
@@ -25,6 +27,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION.yml",
     "fastimage_resize.gemspec",
+    "lib/fastimage_native_resize.bundle",
     "lib/fastimage_resize.rb",
     "test/fixtures/faulty.jpg",
     "test/fixtures/test with space.jpg",
@@ -44,15 +47,15 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<RubyInline>, [">= 3.8.2"])
       s.add_runtime_dependency(%q<fastimage>, [">= 1.2.9"])
+      s.add_development_dependency(%q<rake-compiler>, ["~> 0.9.9"])
     else
-      s.add_dependency(%q<RubyInline>, [">= 3.8.2"])
       s.add_dependency(%q<fastimage>, [">= 1.2.9"])
+      s.add_dependency(%q<rake-compiler>, ["~> 0.9.9"])
     end
   else
-    s.add_dependency(%q<RubyInline>, [">= 3.8.2"])
     s.add_dependency(%q<fastimage>, [">= 1.2.9"])
+    s.add_dependency(%q<rake-compiler>, ["~> 0.9.9"])
   end
 end
 
