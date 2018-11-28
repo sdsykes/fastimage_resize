@@ -2,9 +2,9 @@ require 'rubygems'
 
 require 'test/unit'
 
-PathHere = File.dirname(__FILE__)
+PathHere = File.expand_path(File.dirname(__FILE__))
 
-require File.join(".", PathHere, "..", "lib", 'fastimage_resize')
+require File.join(PathHere, "..", "lib", 'fastimage_resize')
 
 require 'fakeweb'
 
