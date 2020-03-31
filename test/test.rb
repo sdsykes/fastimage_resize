@@ -1,12 +1,13 @@
 require 'rubygems'
-
+require 'webmock'
+include WebMock::API
+WebMock.enable!
 require 'test/unit'
 
 PathHere = File.dirname(__FILE__)
 
 require File.join(".", PathHere, "..", "lib", 'fastimage_resize')
 
-require 'fakeweb'
 
 FixturePath = File.join(PathHere, "fixtures")
 
@@ -25,10 +26,12 @@ BadFixtures = [
 TestUrl = "http://www.example.nowhere/"
 
 GoodFixtures.each do |fn, info|
-  FakeWeb.register_uri(:get, "#{TestUrl}#{fn}", :body => File.join(FixturePath, fn))
+  stub_request(:get,"#{TestUrl}#{fn}")
+    .to_return(body: File.new(File.join(FixturePath, fn)), status: 200)
 end
 BadFixtures.each do |fn|
-  FakeWeb.register_uri(:get, "#{TestUrl}#{fn}", :body => File.join(FixturePath, fn))
+  stub_request(:get,"#{TestUrl}#{fn}")
+    .to_return(body: File.new(File.join(FixturePath, fn)), status: 200)
 end
 
 redirect_response = <<END
@@ -38,7 +41,8 @@ Server: Apache/2.2.11
 Location: https://somwehere.example.com/a.gif
 Status: 302
 END
-FakeWeb.register_uri(:get, "#{TestUrl}/redirect", :response=>redirect_response)
+stub_request(:get, "#{TestUrl}/redirect")
+  .to_return(body: redirect_response, status: 302)
 
 class FastImageResizeTest < Test::Unit::TestCase
   def test_resize_image_types_from_http

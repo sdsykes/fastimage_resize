@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{fastimage_resize}
-  s.version = "2.0.3"
+  s.version = "3.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Stephen Sykes"]
-  s.date = %q{2012-05-12}
+  s.authors = ["Stephen Sykes", "Yusuke Sakurai"]
+  s.date = %q{2020-03-31}
   s.description = %q{FastImage Resize is an extremely light solution for resizing images in ruby by using libgd.}
   s.email = %q{sdsykes@gmail.com}
   s.extra_rdoc_files = [
@@ -22,6 +22,8 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION.yml",
      "lib/fastimage_resize.rb",
+     "ext/fastimage_resize.c",
+     "ext/extconf.rb",
      "test/fixtures/faulty.jpg",
      "test/fixtures/test.bmp",
      "test/fixtures/test.gif",
