@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
     "Gemfile",
     "Gemfile.lock",
     "MIT_LICENCE",
-    "Makefile",
     "README",
     "README.textile",
     "Rakefile",
@@ -55,10 +54,8 @@ Gem::Specification.new do |s|
 
   if s.respond_to? :add_runtime_dependency then
     s.add_runtime_dependency(%q<fastimage>.freeze, ["~> 2.1"])
-    s.add_runtime_dependency(%q<jeweler>.freeze, [">= 0"])
   else
     s.add_dependency(%q<fastimage>.freeze, ["~> 2.1"])
-    s.add_dependency(%q<jeweler>.freeze, [">= 0"])
   end
 end
 
