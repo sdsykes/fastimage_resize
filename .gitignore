@@ -1,3 +1,4 @@
 fastimage_resize.o
 fastimage_resize.bundle
 *.log
+Makefile
