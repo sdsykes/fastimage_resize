@@ -26,10 +26,10 @@
 #
 # * http://blog.new-bamboo.co.uk/2007/12/3/super-f-simple-resizing
 
+require "fastimage_resize/fastimage_resize"
 require 'open-uri'
 require 'tempfile'
 require "fastimage"
-require "./fastimage_resize"
 
 class FastImage
   SUPPORTED_FORMATS = [:jpeg, :png, :gif]

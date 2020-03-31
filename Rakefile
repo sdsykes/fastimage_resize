@@ -9,9 +9,11 @@ begin
     s.homepage = "http://github.com/loilo-inc/fastimage_resize"
     s.description = "FastImage Resize is an extremely light solution for resizing images in ruby by using libgd."
     s.authors = ["Stephen Sykes", "Yusuke Sakurai"]
-    s.files = FileList["[A-Z]*", "{ext,lib,test}/**/*"]
+    s.files = FileList["[A-Z]*", "{ext,lib,test}/**/*"].reject {|f|
+      f =~ /\.(o|bundle)$/
+    }
+    s.license = "MIT"
     s.requirements << 'libgd, see www.libgd.org'
-    s.add_dependency('fastimage', '>= 1.2.0')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

@@ -19,5 +19,5 @@ funcs = [
 ]
 dir_config("gd")
 if have_header("gd.h") and funcs.all? {|v| have_library("gd", v) }
-  create_makefile('fastimage_resize')
-end  
+  create_makefile('fastimage_resize/fastimage_resize')
+end

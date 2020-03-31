@@ -11,7 +11,7 @@ NULLCMD = :
 
 #### Start of system configuration section. ####
 
-srcdir = ext
+srcdir = ext/fastimage_resize
 topdir = /usr/local/Cellar/ruby/2.7.0/include/ruby-2.7.0
 hdrdir = $(topdir)
 arch_hdrdir = /usr/local/Cellar/ruby/2.7.0/include/ruby-2.7.0/x86_64-darwin19
@@ -135,7 +135,7 @@ DISTCLEANDIRS =
 
 extout = 
 extout_prefix = 
-target_prefix = 
+target_prefix = /fastimage_resize
 LOCAL_LIBS = 
 LIBS = $(LIBRUBYARG_SHARED) -lgd -lgd -lgd -lgd -lgd -lgd -lgd -lgd -lgd -lgd -lgd -lgd -lgd   
 ORIG_SRCS = fastimage_resize.c
@@ -186,7 +186,7 @@ distclean: clean distclean-so distclean-static distclean-rb-default distclean-rb
 realclean: distclean
 install: install-so install-rb
 
-install-so: $(DLLIB) $(TIMESTAMP_DIR)/.sitearchdir.time
+install-so: $(DLLIB) $(TIMESTAMP_DIR)/.sitearchdir.-.fastimage_resize.time
 	$(INSTALL_PROG) $(DLLIB) $(RUBYARCHDIR)
 clean-static::
 	-$(Q)$(RM) $(STATIC_LIB)
@@ -198,7 +198,7 @@ do-install-rb:
 do-install-rb-default:
 pre-install-rb-default:
 	@$(NULLCMD)
-$(TIMESTAMP_DIR)/.sitearchdir.time:
+$(TIMESTAMP_DIR)/.sitearchdir.-.fastimage_resize.time:
 	$(Q) $(MAKEDIRS) $(@D) $(RUBYARCHDIR)
 	$(Q) $(TOUCH) $@
 
@@ -257,7 +257,7 @@ site-install-rb: install-rb
 	$(Q) $(CC) $(INCFLAGS) $(CPPFLAGS) $(CFLAGS) $(COUTFLAG)$@ -S $(CSRCFLAG)$<
 
 $(TARGET_SO): $(OBJS) Makefile
-	$(ECHO) linking shared-object $(DLLIB)
+	$(ECHO) linking shared-object fastimage_resize/$(DLLIB)
 	-$(Q)$(RM) $(@)
 	$(Q) $(LDSHARED) -o $@ $(OBJS) $(LIBPATH) $(DLDFLAGS) $(LOCAL_LIBS) $(LIBS)
 	$(Q) $(POSTLINK)
